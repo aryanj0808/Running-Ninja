@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bhagh Ninja Bhagh</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="script.js">
+        score = 0;
+cross = true;
+audio = new Audio('Music.mp3')
+audiogo = new Audio('Dead.mp3')
+
+
+document.onkeydown = function (e) {
+    
+    console.log("Key code is: ", e.keyCode)
+    if (e.keyCode == 38) {
+        ninja = document.querySelector('.ninja');
+        ninja.classList.add('animateNinja');
+        setTimeout(() => {
+            ninja.classList.remove('animateNinja')
+        }, 700);
+    }
+    if (e.keyCode == 39) {
+        ninja = document.querySelector('.ninja');
+        ninjaX = parseInt(window.getComputedStyle(ninja, null).getPropertyValue('left'));
+        ninja.style.left = ninjaX + 112 + "px";
+    }
+    if (e.keyCode == 37) {
+        ninja = document.querySelector('.ninja');
+        ninjaX = parseInt(window.getComputedStyle(ninja, null).getPropertyValue('left'));
+        ninja.style.left = (ninjaX - 112) + "px";
+    }
+}
+setInterval(() => {
+    ninja = document.querySelector('.ninja');
+    gameover = document.querySelector('.gameover');
+    rowdy = document.querySelector('.rowdy');
+
+    dx = parseInt(window.getComputedStyle(ninja, null).getPropertyValue('left'));
+    dy = parseInt(window.getComputedStyle(ninja, null).getPropertyValue('top'));
+
+
+    ox = parseInt(window.getComputedStyle(rowdy, null).getPropertyValue('left'));
+    oy = parseInt(window.getComputedStyle(rowdy, null).getPropertyValue('top'));
+
+    offsetX = Math.abs(dx - ox);
+    offsetY = Math.abs(dy - oy);
+
+    console.log(offsetX, offsetY)
+
+    if (offsetX < 100 && offsetY < 32) {
+        gameover.style.visibility = 'visible';
+        rowdy.classList.remove('animateRowdy')
+        audiogo.play()
+        setTimeout(() => {
+            audiogo.pause();
+             }, 1500);
+        setTimeout(() => {
+            audio.pause();
+             }, 300);
+
+    }
+    else if (offsetX < 140 && cross) {
+        setTimeout(() => {
+            audio.play()
+        }, 200);
+        score += 1;
+        livescore(score);
+        cross = false;
+        setTimeout(() => {
+            cross = true;
+        }, 1000);
+        setTimeout(() => {
+            aniDur = parseFloat(window.getComputedStyle(rowdy, null).getPropertyValue('animation-duration'));
+            newDur = aniDur - 0.1;
+            rowdy.style.animationDuration = newDur + 's';
+            console.log('New animation duration: ', newDur)
+        }, 500);
+
+    }
+
+
+}, 10);
+
+function livescore(score) {
+    scoreboard.innerHTML = "Your Score: " + score;
+}
+
+
+    </script>
+</head>
+<style>
+    *{
+    margin: 0;padding: 0;
+}
+body{
+    background: blue;
+    overflow: hidden;
+}
+.game{
+    background-image: url(bg.png);
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+}
+.gameover{
+    position: relative;
+    top: auto;
+    font-size: 60px;
+    text-align: center;
+    visibility: hidden;
+    font-family: sans-serif;
+
+}
+#scoreboard{ 
+    margin-left: 91%;
+    position: relative;
+    left: 23px;
+    top: -49px;
+    border: 3px solid black;
+    width: 110px;
+    font-family: sans-serif;
+    color: bisque;
+}
+.ninja{
+    background-image: url(Ninja.png);
+    background-repeat: no-repeat;
+    width: 130px;
+    height: 120px;
+    background-size: cover;
+    position: absolute;
+    left: 53px;
+    bottom: 110px;
+}
+.rowdy{
+    background-image: url(Rowdy.png);
+    background-repeat: no-repeat;
+    width: 150px;
+    height: 106px;
+    background-size: cover;
+    position: absolute;
+    left: 591px;
+    bottom: 110px;
+
+}
+.animateNinja{
+    animation: ninja 0.6s linear;
+}
+.animateRowdy{
+ animation: animateRowdy 5s linear infinite;
+}
+@keyframes ninja {
+    0% {
+bottom: 110px;
+    }
+    50%{
+bottom: 320px;
+    }
+    100%{
+bottom: 110px;
+    }
+}
+@keyframes animateRowdy{
+    0%{
+        left: 100vw;
+    }
+    100%{
+        left:-10vw
+    }
+    
+}
+</style>
+<body>
+    
+   
+    <div class="game">
+        <div class="gameover">Game Over</div>
+        <div class="ninja"></div>
+        <div id="scoreboard">Your Score: 0</div>
+
+        <div class="rowdy animateRowdy"></div>
+    </div>
+</body>
+
+</html>

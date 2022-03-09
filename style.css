@@ -1,0 +1,80 @@
+*{
+    margin: 0;padding: 0;
+}
+body{
+    background: blue;
+    overflow: hidden;
+}
+.game{
+    background-image: url(bg.png);
+    background-size: 100vw 100vh;
+    background-repeat: no-repeat;
+    width: 100%;
+    height: 100vh;
+}
+.gameover{
+    position: relative;
+    top: auto;
+    font-size: 60px;
+    text-align: center;
+    visibility: hidden;
+    font-family: sans-serif;
+
+}
+#scoreboard{ 
+    margin-left: 91%;
+    position: relative;
+    left: 23px;
+    top: -49px;
+    border: 3px solid black;
+    width: 110px;
+    font-family: sans-serif;
+    color: bisque;
+}
+.ninja{
+    background-image: url(Ninja.png);
+    background-repeat: no-repeat;
+    width: 130px;
+    height: 120px;
+    background-size: cover;
+    position: absolute;
+    left: 53px;
+    bottom: 110px;
+}
+.rowdy{
+    background-image: url(Rowdy.png);
+    background-repeat: no-repeat;
+    width: 150px;
+    height: 106px;
+    background-size: cover;
+    position: absolute;
+    left: 591px;
+    bottom: 110px;
+
+}
+.animateNinja{
+    animation: ninja 0.6s linear;
+}
+.animateRowdy{
+ animation: animateRowdy 5s linear infinite;
+}
+@keyframes ninja {
+    0% {
+bottom: 110px;
+    }
+    50%{
+bottom: 320px;
+    }
+    100%{
+bottom: 110px;
+    }
+}
+@keyframes animateRowdy{
+    0%{
+        left: 100vw;
+    }
+    100%{
+        left:-10vw
+    }
+    
+}
